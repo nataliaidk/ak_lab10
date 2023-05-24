@@ -1,57 +1,37 @@
-import java.util.ArrayList;
+public class Main {
+    public static void main(String[] args) {
+        int n = 20;
+        byte[] numall = new byte[n];
+        int nprimes = 0;
+        int[] primes = new int[1000000];
 
-class SieveOfEratosthenes {
+        // Ustawianie tablicy numall
+        for (int i = 0; i < n; i++) {
+            numall[i] = 1;
+        }
 
-    public static int count;
-    int sieveOfEratosthenes(int n)
-    {
-        // Create a boolean array "prime[0..n]" and
-        // initialize all entries it as true. A value in
-        // prime[i] will finally be false if i is Not a
-        // prime, else true.
-        boolean prime[] = new boolean[n + 1];
-        ArrayList<Integer> primes = new ArrayList<Integer>();
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
+        // Obliczanie liczb pierwszych
         for (int p = 2; p * p <= n; p++) {
-            // If prime[p] is not changed, then it is a
-            // prime
-            if (prime[p] == true) {
-                // Update all multiples of p greater than or
-                // equal to the square of it numbers which
-                // are multiple of p and are less than p^2
-                // are already been marked.
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+            if (numall[p] == 1) {
+                for (int i = p * p; i < n; i += p) {
+                    numall[i] = 0;
+                }
             }
         }
 
-        // Print all prime numbers
-        for (int i = 2; i <= n; i++) {
-            if (prime[i] == true){
-                primes.add(i);
-                System.out.print(i + " \n");
+        // Liczenie i zapisywanie liczb pierwszych
+        for (int i = 2; i < numall.length; i++) {
+            if (numall[i] == 1) {
+                primes[nprimes] = i;
+                nprimes++;
             }
         }
+        // Wyświetlanie liczb pierwszych
+        for (int i = 0; i < nprimes; i++) {
+            System.out.println(primes[i]);}
 
-        //count
+        System.out.println("\nIlosc liczb pierwszych: " + nprimes);
 
-        for (int i = 0; i < primes.size(); i++)
-        {
-            count++;
-        }
-        return count;
-    }
-
-    // Driver Code
-    public static void main(String args[])
-    {
-
-        int n = 30;
-        SieveOfEratosthenes g = new SieveOfEratosthenes();
-        g.sieveOfEratosthenes(n);
-        System.out.println("Ilosc liczb pierwszych:" + count);
 
     }
 }
